@@ -26,8 +26,6 @@ class Trainer(nn.Module):
             )
         elif problem == 'regression':
             self.loss_function = (lambda y1, y2: F.mse_loss(y1.float(), y2.float()))
-        elif problem.startswith('pretrain'):  # Not used
-            self.loss_function = None
         else:
             raise NotImplementedError()
 
@@ -37,6 +35,11 @@ class Trainer(nn.Module):
                 print('using automatic experiment name: ' + experiment_name)
 
         self.experiment_path = pjoin('logs/', experiment_name)
+
+    def train(self, device=None):
+        if not device:
+            device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
 
 
     def construct_opt(self, optimizer, lr, params, optimizer_params):
