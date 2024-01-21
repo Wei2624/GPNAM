@@ -39,15 +39,16 @@ def save_response_content(response, destination):
                 f.write(chunk)
 
 def fetch_lcd():
-    file_id = "1BM3qJp1eNmrFsXQ-C4exlyJvH2buY45n"
-    destination = "./datasets/LCD/lcd.tar.gz"
-    folder = "./datasets/LCD/"
+    root = Path(__file__).parent.parent
+    folder = os.path.join(root, "datasets", 'LCD/')
+    file_id = "1YE8_rzCYB-fco5yTbyeFW5cdDmV5Rc2i"
+    destination = os.path.join(folder, "lcd.tar.gz")
     
     if not os.path.exists(folder):
         os.makedirs(folder)
     elif len(os.listdir(folder)) != 0:
         print("You have downloaded LCD data set. ")
-        return
+        return 'classification'
 
     print(f"dowload {file_id} to {destination}")
     download_file_from_google_drive(file_id, destination)
@@ -63,18 +64,21 @@ def fetch_lcd():
 
     file_to_rm = Path(destination)
     file_to_rm.unlink()
+
+    return 'classification'
 
 
 
 def fetch_gmsc():  
-    file_id = "1HdZbxgD06u7Xpu54OM4lie9QPnntwjcC"
-    destination = "./datasets/GMSC/gmsc.tar.gz"
-    folder = "./datasets/GMSC/"
+    file_id = "1UGmpwhdFUIP8XsuRUIuNeVLlb3lu0KzA"
+    root = Path(__file__).parent.parent
+    folder = os.path.join(root, "datasets", 'GMSC/')
+    destination = os.path.join(folder, "gmsc.tar.gz")
     if not os.path.exists(folder):
         os.makedirs(folder)
     elif len(os.listdir(folder)) != 0:
-        print("You have downloaded LCD data set. ")
-        return
+        print("You have downloaded GMSC data set. ")
+        return 'classification'
 
     print(f"dowload {file_id} to {destination}")
     download_file_from_google_drive(file_id, destination)
@@ -90,6 +94,38 @@ def fetch_gmsc():
 
     file_to_rm = Path(destination)
     file_to_rm.unlink()
+
+    return 'classification'
+
+def fetch_CAHousing():
+    file_id = "152y7SHNDiEUYiHQzrvEhpsYaLtpNWXW3"
+    root = Path(__file__).parent.parent
+    folder = os.path.join(root, "datasets", 'CAHousing/')
+    destination = os.path.join(folder, "CAHousing.tar.gz")
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    elif len(os.listdir(folder)) != 0:
+        print("You have downloaded CAHousing data set. ")
+        return 'regression'
+
+    print(f"dowload {file_id} to {destination}")
+    download_file_from_google_drive(file_id, destination)
+
+    if destination.endswith("tar.gz"):
+        tar = tarfile.open(destination, "r:gz")
+        tar.extractall(path=folder)
+        tar.close()
+    elif destination.endswith("tar"):
+        tar = tarfile.open(destination, "r:")
+        tar.extractall(path=folder)
+        tar.close()
+
+    file_to_rm = Path(destination)
+    file_to_rm.unlink()
+
+    return 'regression'
+
+
 
 def main():
     # testing purpose only
@@ -104,7 +140,7 @@ def main():
 
     if destination.endswith("tar.gz"):
         tar = tarfile.open(destination, "r:gz")
-        tar.extractall(path="./datasets/LCD/")
+        tar.extractall(path="../datasets/LCD/")
         tar.close()
     elif destination.endswith("tar"):
         tar = tarfile.open(destination, "r:")
@@ -113,7 +149,8 @@ def main():
 
 DATASETS = {
     "LCD":fetch_lcd,
-    "GMSC": fetch_gmsc
+    "GMSC": fetch_gmsc,
+    "CAHousing": fetch_CAHousing
 }
 
 if __name__ == "__main__":

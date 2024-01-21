@@ -11,8 +11,14 @@ Basically, the GPNAM constructs a Neural Additive Model (NAM) by a GP with Rando
 
 You can download the data sets locally:
 ```
-python download_datasets.py LCD GMSC
+python ./gpnam/download_datasets.py LCD GMSC CAHousing
 ```
 
 
-'norminv' requires Statistics and Machine Learning Toolbox.
+Then, you can run the experiment:
+```
+python main.py --dataset LCD --optimizer Adam --n_epochs 200
+```
+
+## Matlab
+**Note**: Statistics and Machine Learning Toolbox is required.
