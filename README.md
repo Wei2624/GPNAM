@@ -16,12 +16,17 @@ python ./gpnam/download_datasets.py LCD GMSC CAHousing
 
 ## Setup
 
+## Sklearn internface
+
+## Searching hyperparameters
+
 ## Experiments
 
 Then, you can run the experiment:
 ```
 python main.py --dataset LCD --optimizer Adam --n_epochs 200
 ```
+
 
 ## Matlab
 **Note**: Statistics and Machine Learning Toolbox is required.
