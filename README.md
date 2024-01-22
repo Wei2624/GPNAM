@@ -14,6 +14,9 @@ You can download the data sets locally:
 python ./gpnam/download_datasets.py LCD GMSC CAHousing
 ```
 
+## Setup
+
+## Experiments
 
 Then, you can run the experiment:
 ```
