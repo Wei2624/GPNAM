@@ -16,7 +16,7 @@ python ./gpnam/download_datasets.py LCD GMSC CAHousing
 
 ## Setup
 
-## Sklearn internface
+## Sklearn interface
 
 ## Searching hyperparameters
 
