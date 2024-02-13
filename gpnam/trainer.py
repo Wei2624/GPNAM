@@ -14,7 +14,6 @@ class Trainer(nn.Module):
     def __init__(self,
                  model,
                  data,
-                 test,
                  experiment_name=None,
                  optimizer="CG",
                  optimizer_params={},
@@ -30,7 +29,7 @@ class Trainer(nn.Module):
         self.verbose = verbose
         self.lr = lr
         self.data = DataLoader(data, batch_size=batch_size, shuffle=True)
-        self.test_data = DataLoader(test, batch_size=batch_size, shuffle=False)
+        # self.test_data = DataLoader(test, batch_size=batch_size, shuffle=False)
         self.n_epochs = n_epochs
         self.optimizer_name = optimizer
         self.display_freq = display_freq
@@ -136,17 +135,18 @@ class Trainer(nn.Module):
 
 
 
-    def evaluate(self, device=None):
+    def evaluate(self, test_data, device=None):
         if not device:
             device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
         self.model.to(device)
         self.model.eval()
+        test_data = DataLoader(test_data, batch_size=self.batch_size, shuffle=False)
 
         y_pred = []
         y_truth = []
         with torch.no_grad():
-            for i_batch, sample_batched in enumerate(self.test_data):
+            for i_batch, sample_batched in enumerate(test_data):
                 x, y = sample_batched['x'].to(device), sample_batched['y'].to(device)
 
                 if self.problem == 'classification':

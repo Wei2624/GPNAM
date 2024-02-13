@@ -38,6 +38,36 @@ class CustomDataset(Dataset):
         return self.data.std(axis=0).values/24 #+ (self.data.quantile(0.6).values - self.data.quantile(0.4).values)
 
 
+class CustomDataset_sklearn(Dataset):
+    """dataset."""
+
+    def __init__(self, X, y, problem, transform=None):
+        self.data = X.astype('float32')
+        self.target = y
+        if self.target.ndim == 2 and self.target.shape[1] == 1: self.target = self.target.squeeze(axis=1)
+
+        self.problem = problem
+
+        self.transform = transform
+
+    def __len__(self):
+        return self.target.shape[0]
+
+    def __getitem__(self, idx):
+        sample = {'x': self.data.iloc[idx].values, 'y': np.asarray(self.target[idx])}
+
+        if self.transform:
+            sample = self.transform(sample)
+
+        return sample
+
+    def get_input_dim(self):
+        return self.data.shape[1]
+
+    def get_kernel_width(self):
+        return self.data.std(axis=0).values/24 #+ (self.data.quantile(0.6).values - self.data.quantile(0.4).values)
+
+
 
 def get_dataset(dataset_name):
     root = Path(__file__).parent.parent

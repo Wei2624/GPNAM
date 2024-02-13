@@ -76,11 +76,11 @@ def main():
     else:
         raise NotImplementedError()
 
-    trainer = gpnam.trainer.Trainer(model, train_dataset, test_dataset, batch_size=args.batch_size, problem=task, optimizer=args.optimizer, n_epochs=args.n_epochs)
+    trainer = gpnam.trainer.Trainer(model, train_dataset, batch_size=args.batch_size, problem=task, optimizer=args.optimizer, n_epochs=args.n_epochs)
 
     trainer.train(device)
 
-    trainer.evaluate(device)
+    trainer.evaluate(test_dataset, device)
 
 
 
