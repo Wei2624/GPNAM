@@ -44,3 +44,15 @@ python main.py --dataset LCD --optimizer Adam --n_epochs 200
 
 ### Matlab
 **Note**: Statistics and Machine Learning Toolbox is required.
+
+
+## Citation
+If you find this repo useful, please consider citing our paper:
+```
+@inproceedings{,
+  title={Gaussian Process Neural Additive Models},
+  author={Wei Zhang and Brian Barr and John Paisley},
+  booktitle={Association for the Advancement of Artificial Intelligence},
+  year={2024}
+}
+```
