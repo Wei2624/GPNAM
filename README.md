@@ -15,7 +15,7 @@ pip install gpnam
 ```
 
 Then, you can run the model simply by:
-```
+```python
 from gpnam.sklearn import GPNAM
 
 gpnam = GPNAM()
@@ -23,22 +23,24 @@ gpnam.fit(X, y)
 
 y_pred = gpnam.predict(X_test)
 ```
-  
-## Data sets preparation
+
+## Build on your own
+
+### Data sets preparation
 
 You can download the data sets locally:
 ```
 python ./gpnam/download_datasets.py LCD GMSC CAHousing
 ```
 
-## Setup
+### Setup
 
-## Experiments
+### Experiments
 
 Then, you can run the experiment:
 ```
 python main.py --dataset LCD --optimizer Adam --n_epochs 200
 ```
 
-## Matlab
+### Matlab
 **Note**: Statistics and Machine Learning Toolbox is required.
