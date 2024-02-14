@@ -9,6 +9,7 @@ from sklearn.metrics import roc_auc_score
 from sklearn.metrics import mean_squared_error
 import math
 from scipy.sparse.linalg import cg
+from tqdm import tqdm
 
 class Trainer(nn.Module):
     def __init__(self,
@@ -28,6 +29,7 @@ class Trainer(nn.Module):
         self.model = model
         self.verbose = verbose
         self.lr = lr
+        self.batch_size = batch_size
         self.data = DataLoader(data, batch_size=batch_size, shuffle=True)
         # self.test_data = DataLoader(test, batch_size=batch_size, shuffle=False)
         self.n_epochs = n_epochs
@@ -67,7 +69,7 @@ class Trainer(nn.Module):
         self.model.to(device)
 
         if self.optimizer_name != 'CG':
-            for epoch in range(self.n_epochs):
+            for epoch in tqdm(range(self.n_epochs)):
                 running_loss = 0
                 performane = 0
                 for i_batch, sample_batched in enumerate(self.data):
@@ -111,6 +113,7 @@ class Trainer(nn.Module):
                 # print('loss at ', epoch, ' : ', running_loss)
                 # print('accu at ', epoch, ' : ', correct / len(self.data.dataset))
         else:
+            print('Starting to construct A and b for Conjugate gradient...')
             A = []
             b = []
             for i_batch, sample_batched in enumerate(self.data):
@@ -126,6 +129,9 @@ class Trainer(nn.Module):
             A[-1,-1] = temp
 
             b = sum(b).cpu().numpy()
+
+            print('Starting to construct A and b for Conjugate gradient...')
+            print('Starting to solve using A and b...')
 
             w = self.opt(A, b)[0]
 

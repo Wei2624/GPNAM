@@ -50,7 +50,7 @@ def fetch_lcd():
         print("You have downloaded LCD data set. ")
         return 'classification'
 
-    print(f"dowload {file_id} to {destination}")
+    print(f"downloading {file_id} to {destination}")
     download_file_from_google_drive(file_id, destination)
 
     if destination.endswith("tar.gz"):
@@ -80,7 +80,7 @@ def fetch_gmsc():
         print("You have downloaded GMSC data set. ")
         return 'classification'
 
-    print(f"dowload {file_id} to {destination}")
+    print(f"downloading {file_id} to {destination}")
     download_file_from_google_drive(file_id, destination)
 
     if destination.endswith("tar.gz"):
@@ -108,7 +108,7 @@ def fetch_CAHousing():
         print("You have downloaded CAHousing data set. ")
         return 'regression'
 
-    print(f"dowload {file_id} to {destination}")
+    print(f"downloading {file_id} to {destination}")
     download_file_from_google_drive(file_id, destination)
 
     if destination.endswith("tar.gz"):

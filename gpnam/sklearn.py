@@ -18,11 +18,12 @@ from .utils import process_in_chunks, check_numpy, sigmoid
 
 
 
-class GPGAMBase(object):
+class GPGAM(object):
     """Base class for GPGAM."""
     def __init__(
     	self,
     	input_dim,
+    	problem,
     	name=None,
     	preprocessed=True,
     	kernel_width=0.2,
@@ -32,7 +33,6 @@ class GPGAMBase(object):
 	    n_epochs=300,
 	    lr=0.01,
 	    batch_size=256,
-	    problem='regression',
 	    objective='rmse',
 	    verbose=False,
 	    n_last_checkpoints=5,
@@ -41,6 +41,8 @@ class GPGAMBase(object):
 
 	    assert objective in ['ce_loss', 'rmse'], \
 	            'Invalid objective: ' + str(objective)
+	    assert optimizer in ['SGD', 'CG', 'Adam'], \
+	            'Invalid optimizer: ' + str(optimizer)
 	    if name is None:
 	            name = 'tmp_{}.{:0>2d}.{:0>2d}_{:0>2d}:{:0>2d}'.format(*time.gmtime()[:5])
 
@@ -61,7 +63,7 @@ class GPGAMBase(object):
 	    self.display_freq = display_freq
 	    self.device = device
 
-	def fit(X, y):
+	def fit(self, X, y):
 		"""Train the model.
 
         Args:
@@ -75,9 +77,9 @@ class GPGAMBase(object):
         train_data = DataLoader(train_data, batch_size=self.batch_size, shuffle=True)
 
         if self.problem == 'classification':
-	        model = GPNAMClass(self.input_dim)
+	        self.model = GPNAMClass(self.input_dim)
 	    elif self.problem == 'regression':
-	        model = GPNAMReg(self.input_dim, self.kernel_width)
+	        self.model = GPNAMReg(self.input_dim, self.kernel_width)
 	    else:
 	        raise NotImplementedError()
 
@@ -92,10 +94,17 @@ class GPGAMBase(object):
 
 	   	trainer.train(self.device)
 
+	def predict(self, X):
+		return self.model.predict(X)
+
+	def predict_prob(self, X):
+		assert self.problem == 'classification',\
+			'Predict_prob is only valid for classification.'
+
+		return self.model.predict_prob(X)
 
 
-
-class GPGAMReg(GPGAMBase):
+class GPGAMReg(GPGAM):
     """Regression class for GPGAM."""
     def __init__(
     	self,
@@ -123,6 +132,7 @@ class GPGAMReg(GPGAMBase):
 
 	    super.__init__(
 	    	input_dim=input_dim,
+	    	problem='regression',
     		name=None,
     		preprocessed=True,
     		kernel_width=0.2,
@@ -132,7 +142,6 @@ class GPGAMReg(GPGAMBase):
 	    	n_epochs=300,
 	    	lr=0.01,
 	    	batch_size=256,
-	    	problem='regression',
 	    	objective='rmse',
 	    	verbose=False,
 	    	n_last_checkpoints=5,
@@ -158,7 +167,7 @@ class GPGAMReg(GPGAMBase):
 
 
 
-class GPGAMClass(GPGAMBase):
+class GPGAMClass(GPGAM):
     """Regression class for GPGAM."""
     def __init__(
     	self,
@@ -167,13 +176,13 @@ class GPGAMClass(GPGAMBase):
     	preprocessed=True,
     	kernel_width=0.2,
     	rff_num_feat=100,
-    	optimizer="CG",
+    	optimizer="Adam",
 	    optimizer_params={},
 	    n_epochs=300,
 	    lr=0.01,
 	    batch_size=256,
-	    problem='regression',
-	    objective='rmse',
+	    problem='classification',
+	    objective='ce',
 	    verbose=False,
 	    n_last_checkpoints=5,
 	    display_freq=1,

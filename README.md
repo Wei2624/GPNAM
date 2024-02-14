@@ -18,7 +18,11 @@ Then, you can run the model simply by:
 ```python
 from gpnam.sklearn import GPNAM
 
-gpnam = GPNAM()
+"""
+input_dim: the dimensions of input data
+problem: type of the model, 'classification' or 'regression'
+"""
+gpnam = GPNAM(input_dim, problem)
 gpnam.fit(X, y)
 
 y_pred = gpnam.predict(X_test)
