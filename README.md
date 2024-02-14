@@ -52,7 +52,7 @@ If you find this repo useful, please consider citing our paper:
 @inproceedings{,
   title={Gaussian Process Neural Additive Models},
   author={Wei Zhang and Brian Barr and John Paisley},
-  booktitle={Association for the Advancement of Artificial Intelligence},
+  booktitle={AAAI Conference on Artificial Intelligence},
   year={2024}
 }
 ```
