@@ -14,6 +14,7 @@ from .model import GPNAMClass
 from .model import GPNAMReg
 from .trainer import Trainer
 from .data import CustomDataset_sklearn
+from .utils import process_in_chunks, check_numpy, sigmoid         
 
 
 
@@ -90,6 +91,140 @@ class GPGAMBase(object):
 	    			n_epochs=self.n_epochs)
 
 	   	trainer.train(self.device)
-	    
+
+
+
+
+class GPGAMReg(GPGAMBase):
+    """Regression class for GPGAM."""
+    def __init__(
+    	self,
+    	input_dim,
+    	name=None,
+    	preprocessed=True,
+    	kernel_width=0.2,
+    	rff_num_feat=100,
+    	optimizer="CG",
+	    optimizer_params={},
+	    n_epochs=300,
+	    lr=0.01,
+	    batch_size=256,
+	    problem='regression',
+	    objective='rmse',
+	    verbose=False,
+	    n_last_checkpoints=5,
+	    display_freq=1,
+	    device=None):
+
+	    assert objective in ['rmse'], \
+	            'Invalid objective: ' + str(objective)
+	    if name is None:
+	            name = 'tmp_{}.{:0>2d}.{:0>2d}_{:0>2d}:{:0>2d}'.format(*time.gmtime()[:5])
+
+	    super.__init__(
+	    	input_dim=input_dim,
+    		name=None,
+    		preprocessed=True,
+    		kernel_width=0.2,
+    		rff_num_feat=100,
+    		optimizer="CG",
+	    	optimizer_params={},
+	    	n_epochs=300,
+	    	lr=0.01,
+	    	batch_size=256,
+	    	problem='regression',
+	    	objective='rmse',
+	    	verbose=False,
+	    	n_last_checkpoints=5,
+	    	display_freq=1,
+	    	device=None)
+
+	def predict(X):
+		"""Predict the data.
+
+        Args:
+            X (numy array): inputs.
+        """
+        self.model.to(device)
+        self.model.eval()
+
+        X = torch.from_numpy(X).to(self.device)
+
+        with torch.no_grad():
+            prediction = process_in_chunks(self.model, X, batch_size=self.batch_size)
+            prediction = check_numpy(prediction)
+
+        return prediction
+
+
+
+class GPGAMClass(GPGAMBase):
+    """Regression class for GPGAM."""
+    def __init__(
+    	self,
+    	input_dim,
+    	name=None,
+    	preprocessed=True,
+    	kernel_width=0.2,
+    	rff_num_feat=100,
+    	optimizer="CG",
+	    optimizer_params={},
+	    n_epochs=300,
+	    lr=0.01,
+	    batch_size=256,
+	    problem='regression',
+	    objective='rmse',
+	    verbose=False,
+	    n_last_checkpoints=5,
+	    display_freq=1,
+	    device=None):
+
+	    assert objective in ['rmse'], \
+	            'Invalid objective: ' + str(objective)
+	    if name is None:
+	            name = 'tmp_{}.{:0>2d}.{:0>2d}_{:0>2d}:{:0>2d}'.format(*time.gmtime()[:5])
+
+	    super.__init__(
+	    	input_dim=input_dim,
+    		name=None,
+    		preprocessed=True,
+    		kernel_width=0.2,
+    		rff_num_feat=100,
+    		optimizer="CG",
+	    	optimizer_params={},
+	    	n_epochs=300,
+	    	lr=0.01,
+	    	batch_size=256,
+	    	problem='regression',
+	    	objective='rmse',
+	    	verbose=False,
+	    	n_last_checkpoints=5,
+	    	display_freq=1,
+	    	device=None)
+
+	def predict(X):
+		"""Predict the data.
+
+        Args:
+            X (numy array): inputs.
+        """
+        self.model.to(device)
+        self.model.eval()
+
+        X = torch.from_numpy(X).to(self.device)
+
+        with torch.no_grad():
+            logits = process_in_chunks(self.model, X_tr, batch_size=self.batch_size)
+            logits = check_numpy(logits)
+        return logits
+    def predict_prob(X):
+    	logits = self.predict(X)
+        prob = sigmoid_np(logits)
+        prob = np.vstack([1. - prob, prob]).T
+
+        return prob
+
+
+
 
 
