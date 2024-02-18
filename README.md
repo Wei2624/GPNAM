@@ -20,7 +20,7 @@ from gpnam.sklearn import GPNAM
 
 """
 input_dim: the dimensions of input data
-problem: type of the model, 'classification' or 'regression'
+problem: type of the task, 'classification' or 'regression'
 """
 gpnam = GPNAM(input_dim, problem)
 gpnam.fit(X, y)
@@ -28,7 +28,19 @@ gpnam.fit(X, y)
 y_pred = gpnam.predict(X_test)
 ```
 
+### Use Sklearn to reproduce
+You can reproduce the results of LCD data set in the paper by:
+```commandline
+python reproduce_results_sklearn.py LCD
+```
+or the results of CAHousing data set:
+```commandline
+python reproduce_results_sklearn.py CAHousing
+```
+
 ## Build on your own
+
+### Setup
 
 ### Data sets preparation
 
@@ -36,8 +48,6 @@ You can download the data sets locally:
 ```
 python ./gpnam/download_datasets.py LCD GMSC CAHousing
 ```
-
-### Setup
 
 ### Experiments
 

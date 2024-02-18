@@ -1,0 +1,17 @@
+.Python
+env/
+bin/
+build/
+develop-eggs/
+dist/
+eggs/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg/
+*.eggs/
+*.pyc
+test.py
+readme_pypi.md
+logs/

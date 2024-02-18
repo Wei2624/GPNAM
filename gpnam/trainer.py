@@ -108,8 +108,6 @@ class Trainer(nn.Module):
                         to_display['RMSE'] = performane
                     self.display(to_display)
 
-
-
                 # print('loss at ', epoch, ' : ', running_loss)
                 # print('accu at ', epoch, ' : ', correct / len(self.data.dataset))
         else:
