@@ -43,6 +43,15 @@ python reproduce_results_sklearn.py CAHousing
 ## Build on your own
 
 ### Setup
+1. Create a new environment with `Python>=3.7` by:
+```commandline
+conda create -n gpnam python=3.7
+conda activate gpnam
+```
+2. install the required packages by:
+```commandline
+pip install -r requirements.txt
+```
 
 ### Data sets preparation
 
