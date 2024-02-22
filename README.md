@@ -7,6 +7,8 @@ This repository contains the source code for the paper Gaussian Process Neural A
 
 Basically, the GPNAM constructs a Neural Additive Model (NAM) by a GP with Random Fourier Features as the shape function for each input feature, which leads to a convex optimization with a significant reduction in trainable parameters. 
 
+The paper is available at:[![arXiv](https://img.shields.io/badge/arXiv-2402.12518-b31b1b.svg?style=plastic)](https://arxiv.org/abs/2402.12518)
+
 ## Sklearn interface
 
 You can install the package by:
