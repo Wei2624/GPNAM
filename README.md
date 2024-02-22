@@ -1,4 +1,5 @@
 # GPNAM: Gaussian Process Neural Additive Models
+[![arXiv](https://img.shields.io/badge/arXiv-2402.12518-b31b1b.svg?style=plastic)](https://arxiv.org/abs/2402.12518) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Wei2624/GPNAM?tab=MIT-1-ov-file)
 
 ![The framework of GPNAM](./imgs/framework.jpg)
 *The framework of GPNAM. `$z_s, c_s$` and the sinusoidal function are predefined from the paper and do not require training. The only trainable parameter is `W` that maps to the output of each shape function.*
@@ -7,7 +8,6 @@ This repository contains the source code for the paper Gaussian Process Neural A
 
 Basically, the GPNAM constructs a Neural Additive Model (NAM) by a GP with Random Fourier Features as the shape function for each input feature, which leads to a convex optimization with a significant reduction in trainable parameters. 
 
-The paper is available at:[![arXiv](https://img.shields.io/badge/arXiv-2402.12518-b31b1b.svg?style=plastic)](https://arxiv.org/abs/2402.12518)
 
 ## Sklearn interface
 
