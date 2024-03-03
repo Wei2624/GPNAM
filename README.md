@@ -75,9 +75,11 @@ python main.py --dataset LCD --optimizer Adam --n_epochs 200
 If you find this repo useful, please consider citing our paper:
 ```
 @inproceedings{,
+  @article{zhang2024gaussian,
   title={Gaussian Process Neural Additive Models},
-  author={Wei Zhang and Brian Barr and John Paisley},
-  booktitle={AAAI Conference on Artificial Intelligence},
+  author={Zhang, Wei and Barr, Brian and Paisley, John},
+  journal={arXiv preprint arXiv:2402.12518},
   year={2024}
+}
 }
 ```
